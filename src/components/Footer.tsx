@@ -1,0 +1,110 @@
+import { Link } from "react-router-dom";
+import { Mail, Phone, MapPin } from "lucide-react";
+
+const services = [
+  { label: "SEO Services", path: "/services/seo" },
+  { label: "Social Media Marketing", path: "/services/social-media" },
+  { label: "Meta Ads", path: "/services/meta-ads" },
+  { label: "Google Ads (PPC)", path: "/services/google-ads" },
+  { label: "Website Development", path: "/services/web-development" },
+];
+
+const company = [
+  { label: "About Us", path: "/about" },
+  { label: "Case Studies", path: "/case-studies" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+];
+
+const Footer = () => (
+  <footer className="bg-primary text-primary-foreground">
+    <div className="container py-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        {/* Brand */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-9 h-9 rounded-lg bg-gradient-accent flex items-center justify-center">
+              <span className="font-heading font-bold text-accent-foreground text-lg">B</span>
+            </div>
+            <span className="font-heading font-bold text-xl">
+              Brand<span className="text-secondary">Bandhu</span>
+            </span>
+          </div>
+          <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
+            A premium digital marketing agency focused on growth and performance marketing for ambitious brands.
+          </p>
+          <div className="flex gap-3">
+            {["facebook", "instagram", "linkedin", "twitter"].map((s) => (
+              <a
+                key={s}
+                href="#"
+                className="w-9 h-9 rounded-lg bg-primary-foreground/10 hover:bg-secondary/20 flex items-center justify-center transition-colors text-xs font-heading font-semibold uppercase"
+                aria-label={s}
+              >
+                {s[0].toUpperCase()}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Services */}
+        <div>
+          <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Services</h4>
+          <ul className="space-y-2">
+            {services.map((s) => (
+              <li key={s.path}>
+                <Link to={s.path} className="text-sm text-primary-foreground/70 hover:text-secondary transition-colors">
+                  {s.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Company */}
+        <div>
+          <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Company</h4>
+          <ul className="space-y-2">
+            {company.map((c) => (
+              <li key={c.path}>
+                <Link to={c.path} className="text-sm text-primary-foreground/70 hover:text-secondary transition-colors">
+                  {c.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Contact</h4>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
+              <Phone size={16} className="mt-0.5 text-secondary shrink-0" />
+              +91-9876543210
+            </li>
+            <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
+              <Mail size={16} className="mt-0.5 text-secondary shrink-0" />
+              hello@brandbandhu.com
+            </li>
+            <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
+              <MapPin size={16} className="mt-0.5 text-secondary shrink-0" />
+              Pune, Maharashtra, India
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div className="border-t border-primary-foreground/10">
+      <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-primary-foreground/50">
+        <span>© 2026 BrandBandhu. All rights reserved.</span>
+        <div className="flex gap-6">
+          <a href="#" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="hover:text-primary-foreground transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+);
+
+export default Footer;

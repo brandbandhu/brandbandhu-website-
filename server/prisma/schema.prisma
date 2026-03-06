@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model AdminUser {
+  id           Int            @id @default(autoincrement())
+  username     String         @unique
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  sessions     AdminSession[]
+}
+
+model AdminSession {
+  id          Int       @id @default(autoincrement())
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  adminUserId Int
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminUserId])
+}
+
+model BlogPost {
+  id            Int      @id @default(autoincrement())
+  title         String
+  slug          String   @unique
+  excerpt       String?  @db.Text
+  content       String   @db.LongText
+  published     Boolean  @default(false)
+  publishedAt   DateTime?
+  imageData     Bytes?   @db.LongBlob
+  imageMimeType String?
+  imageName     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model CaseStudy {
+  id            Int      @id @default(autoincrement())
+  title         String
+  slug          String   @unique
+  clientName    String?
+  industry      String?
+  challenge     String   @db.LongText
+  solution      String   @db.LongText
+  results       String   @db.LongText
+  published     Boolean  @default(false)
+  publishedAt   DateTime?
+  imageData     Bytes?   @db.LongBlob
+  imageMimeType String?
+  imageName     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
