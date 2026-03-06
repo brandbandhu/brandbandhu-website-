@@ -20,6 +20,12 @@ public class AppProperties {
   @Value("${app.session-ttl-hours}")
   private int sessionTtlHours;
 
+  @Value("${app.privyr-webhook-url:}")
+  private String privyrWebhookUrl;
+
+  @Value("${app.google-sheets-webhook-url:}")
+  private String googleSheetsWebhookUrl;
+
   public String getClientOrigin() {
     return clientOrigin;
   }
@@ -38,5 +44,13 @@ public class AppProperties {
 
   public int getSessionTtlHours() {
     return sessionTtlHours;
+  }
+
+  public String getPrivyrWebhookUrl() {
+    return privyrWebhookUrl;
+  }
+
+  public String getGoogleSheetsWebhookUrl() {
+    return googleSheetsWebhookUrl;
   }
 }
