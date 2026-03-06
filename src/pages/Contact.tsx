@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+ï»¿import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock, MessageCircle, Send, CalendarClock } from "lucide-react";
 import Layout from "@/components/Layout";
 import FadeIn from "@/components/FadeIn";
@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4001";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").trim().replace(/\/$/, "");
+const CONTACT_ENDPOINT = API_BASE ? `${API_BASE}/api/contact` : "/api/contact";
 
 const contactInfo = [
   { icon: Phone, label: "Phone", value: "+91 8623829117", href: "tel:+918623829117" },
@@ -48,22 +49,28 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/api/contact`, {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-        throw new Error("Contact request failed");
+        const message = await response.text();
+        throw new Error(message || "Contact request failed");
       }
 
       form.reset();
       toast({ title: "Message Sent", description: "Our team will get back to you within 24 hours." });
-    } catch {
+    } catch (error) {
+      const description =
+        error instanceof Error && error.message
+          ? error.message
+          : "Please try again in a moment or contact us on WhatsApp.";
+
       toast({
         title: "Submission failed",
-        description: "Please try again in a moment or contact us on WhatsApp.",
+        description,
         variant: "destructive",
       });
     } finally {
@@ -82,11 +89,11 @@ const Contact = () => {
             Contact
           </motion.span>
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="font-heading font-extrabold text-4xl md:text-6xl text-primary-foreground leading-tight mb-6">
-            Let’s Plan Your
+            Letâ€™s Plan Your
             <span className="text-gradient"> Next Growth Phase</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg text-primary-foreground/75 max-w-3xl mx-auto">
-            Share your goals and current challenges. We’ll suggest a practical roadmap tailored to your business.
+            Share your goals and current challenges. Weâ€™ll suggest a practical roadmap tailored to your business.
           </motion.p>
         </div>
       </section>
@@ -161,7 +168,7 @@ const Contact = () => {
                     <h3 className="font-heading font-semibold text-xl">Consultation Slots</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Available Monday to Saturday. Share your preferred time and we’ll schedule a strategy call.
+                    Available Monday to Saturday. Share your preferred time and weâ€™ll schedule a strategy call.
                   </p>
                 </div>
               </FadeIn>
