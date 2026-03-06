@@ -30,13 +30,13 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-card/95 backdrop-blur-md shadow-card border-b border-border"
+          ? "glass-panel shadow-card border-b border-border/60"
           : "bg-transparent"
       }`}
     >
       <div className="container flex items-center justify-between h-16 md:h-20">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-gradient-accent flex items-center justify-center">
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="w-10 h-10 rounded-xl bg-gradient-accent flex items-center justify-center shadow-button transition-transform duration-300 group-hover:-translate-y-0.5">
             <span className="font-heading font-bold text-secondary-foreground text-lg">B</span>
           </div>
           <span className="font-heading font-bold text-xl text-foreground">
@@ -44,16 +44,15 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 location.pathname === item.path
-                  ? "text-secondary bg-secondary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "text-secondary bg-secondary/15 shadow-sm"
+                  : "text-muted-foreground hover:text-foreground hover:bg-white/70"
               }`}
             >
               {item.label}
@@ -69,9 +68,8 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 text-foreground"
+          className="lg:hidden p-2 rounded-lg text-foreground hover:bg-white/70 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -79,14 +77,13 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-card border-b border-border overflow-hidden"
+            className="lg:hidden glass-panel border-b border-border/70 overflow-hidden"
           >
             <nav className="container py-4 flex flex-col gap-1">
               {navItems.map((item) => (
@@ -96,7 +93,7 @@ const Header = () => {
                   className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     location.pathname === item.path
                       ? "text-secondary bg-secondary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/70"
                   }`}
                 >
                   {item.label}
@@ -116,3 +113,4 @@ const Header = () => {
 };
 
 export default Header;
+

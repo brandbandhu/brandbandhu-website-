@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const services = [
@@ -17,13 +17,17 @@ const company = [
 ];
 
 const Footer = () => (
-  <footer className="bg-primary text-primary-foreground">
-    <div className="container py-16">
+  <footer className="relative overflow-hidden bg-hero text-primary-foreground mt-20">
+    <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-secondary/20 blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+    </div>
+
+    <div className="container py-16 relative z-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        {/* Brand */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-gradient-accent flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-accent flex items-center justify-center shadow-button">
               <span className="font-heading font-bold text-accent-foreground text-lg">B</span>
             </div>
             <span className="font-heading font-bold text-xl">
@@ -38,7 +42,7 @@ const Footer = () => (
               <a
                 key={s}
                 href="#"
-                className="w-9 h-9 rounded-lg bg-primary-foreground/10 hover:bg-secondary/20 flex items-center justify-center transition-colors text-xs font-heading font-semibold uppercase"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-secondary/25 flex items-center justify-center transition-colors text-xs font-heading font-semibold uppercase"
                 aria-label={s}
               >
                 {s[0].toUpperCase()}
@@ -47,7 +51,6 @@ const Footer = () => (
           </div>
         </div>
 
-        {/* Services */}
         <div>
           <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Services</h4>
           <ul className="space-y-2">
@@ -61,7 +64,6 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Company */}
         <div>
           <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Company</h4>
           <ul className="space-y-2">
@@ -75,27 +77,27 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Contact */}
         <div>
           <h4 className="font-heading font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/50">Contact</h4>
           <ul className="space-y-3">
             <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
               <Phone size={16} className="mt-0.5 text-secondary shrink-0" />
-              +91-9876543210
+              +91 8623829117
             </li>
             <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
               <Mail size={16} className="mt-0.5 text-secondary shrink-0" />
-              hello@brandbandhu.com
+              brandbandhu.praavi@gmail.com
             </li>
             <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
               <MapPin size={16} className="mt-0.5 text-secondary shrink-0" />
-              Pune, Maharashtra, India
+              1st Floor, Anand Complex, Solapur - Pune Hwy, near Ambika Jewellers, Loni Kalbhor, Pune, Maharashtra 412201
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div className="border-t border-primary-foreground/10">
+
+    <div className="border-t border-white/10 relative z-10">
       <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-primary-foreground/50">
         <span>© 2026 BrandBandhu. All rights reserved.</span>
         <div className="flex gap-6">
@@ -108,3 +110,6 @@ const Footer = () => (
 );
 
 export default Footer;
+
+
+

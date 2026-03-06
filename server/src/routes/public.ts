@@ -1,7 +1,59 @@
 import { Router } from "express";
+import { config } from "../config";
 import { prisma } from "../prisma";
 
 const router = Router();
+
+router.post("/contact", async (req, res) => {
+  const { name, email, phone, service, message } = req.body ?? {};
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: "Name, email, and message are required" });
+  }
+
+  if (!config.privyrWebhookUrl) {
+    return res.status(500).json({ message: "Contact webhook is not configured" });
+  }
+
+  const payload = {
+    name: String(name),
+    display_name: String(name),
+    email: String(email),
+    phone: phone ? String(phone) : "",
+    phone_number: phone ? String(phone) : "",
+    service: service ? String(service) : "",
+    message: String(message),
+    notes: String(message),
+    source: "BrandBandhu Contact Form",
+    custom_fields: {
+      service: service ? String(service) : "",
+      message: String(message),
+      source: "BrandBandhu Contact Form",
+    },
+  };
+
+  try {
+    const webhookUrl = new URL(config.privyrWebhookUrl);
+    webhookUrl.hash = "";
+
+    const webhookResponse = await fetch(webhookUrl.toString(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!webhookResponse.ok) {
+      const responseText = await webhookResponse.text();
+      console.error("Privyr webhook failed", webhookResponse.status, responseText);
+      return res.status(502).json({ message: "Failed to submit lead to notification provider" });
+    }
+
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error("Privyr webhook error", error);
+    return res.status(502).json({ message: "Failed to submit lead to notification provider" });
+  }
+});
 
 router.get("/blogs", async (_req, res) => {
   const blogs = await prisma.blogPost.findMany({
